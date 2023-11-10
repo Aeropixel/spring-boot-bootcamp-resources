@@ -7,7 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class WorkbookApplication {
 
 	public static void main(String[] args) {
+		System.out.println("Hello world!");
+		System.out.println("Why isn't this restarting?");
 		SpringApplication.run(WorkbookApplication.class, args);
 	}
-
 }
