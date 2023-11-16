@@ -1,10 +1,16 @@
 package com.ltp.gradesubmission;
 
+import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
 public class Grade {
+    @NotBlank(message = "Name cannot be blank")
     private String name;
+    @NotBlank(message = "Subject cannot be blank")
     private String subject;
+
+    // The @Score annotation is a custom annotation used to validate custom data, in this case the Scores
+    @Score (message = "The provided grade is invalid")
     private String score;
     private String id;
 

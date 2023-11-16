@@ -7,10 +7,13 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 
 @Controller
 public class StoreController {
@@ -26,7 +29,16 @@ public class StoreController {
     }
 
     @PostMapping("/submitItem")
-    public String handleSubmit(Item item, RedirectAttributes redirectAttributes) {
+    public String handleSubmit(
+            @Valid Item item, // This takes the data from the form and @Valid makes that data to pass through a validation process
+            BindingResult result, // This carries the result of the validation, i.e. if there's errors, they'll be stores here
+            RedirectAttributes redirectAttributes // This sends some data to be
+    ) {
+        if (item.getPrice() < item.getDiscount()) {
+            result.rejectValue("price", "", "Price cannot be less than the discount");
+        }
+        if (result.hasErrors()) return "form";
+
         int index = getIndexFromId(item.getId());
         String status = Constants.SUCCESS_STATUS;
         if (index == Constants.NOT_FOUND) {
@@ -57,7 +69,6 @@ public class StoreController {
         long diff = Math.abs(newDate.getTime() - oldDate.getTime());
         return (int) (TimeUnit.MILLISECONDS.toDays(diff)) <= 5;
     }
-
 
 
 }
