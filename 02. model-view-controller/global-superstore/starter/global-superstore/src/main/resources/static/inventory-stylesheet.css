@@ -57,7 +57,7 @@ table tbody td[type=currency], td[type=date] {
 }
 
 table tbody td[type=currency]:before {
-    content: "$";
+    content: "";
   }
   
 .table-button {
